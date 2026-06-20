@@ -212,8 +212,21 @@
 </style>
 <style>
 .studio{margin-top:7px;font-family:var(--ui);font-size:12.5px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--sage)}
-.tabs{overflow:visible}
-.tab{flex:1 1 0;min-width:0;white-space:nowrap;font-size:13.5px;padding:11px 6px}
+.tabs{overflow-x:auto;overflow-y:visible;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex:0 0 auto;min-width:0;white-space:nowrap;font-size:13.5px;padding:11px 13px}
+.jgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.jtile{background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:14px;padding:14px 13px;display:flex;flex-direction:column;gap:3px}
+.jtile.gold .jnum{color:var(--gold)}
+.jnum{font-family:var(--display);font-size:27px;color:var(--cream);line-height:1}
+.jlbl{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.rmeta{font-size:13px;color:var(--lav);margin:2px 0 4px}
+.rhint{font-size:11.5px;color:var(--muted);opacity:.85;margin-bottom:10px}
+.ritem{display:flex;align-items:flex-start;gap:10px;padding:9px 2px;cursor:pointer;border-bottom:1px solid var(--line)}
+.rnum{flex:0 0 auto;width:22px;height:22px;border-radius:50%;background:rgba(255,255,255,.07);color:var(--lav);font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:1px}
+.ritem.done .ptext{color:var(--sage);text-decoration:line-through;opacity:.7}
+.ritem.done .rnum{background:linear-gradient(135deg,var(--sage),var(--sage-deep));color:#13251a}
+.rnotes{margin-top:12px;padding:11px 13px;background:rgba(255,255,255,.04);border-radius:12px;font-size:13.5px;color:var(--lav);white-space:pre-wrap}
 header{position:relative}
 .gearbtn{position:absolute;top:2px;right:0;appearance:none;border:1px solid var(--line);background:var(--card);color:var(--lav);width:38px;height:38px;border-radius:50%;font-size:17px;cursor:pointer;line-height:1;transition:border-color .2s,color .2s}
 .gearbtn:hover{border-color:var(--sage);color:var(--cream)}
@@ -231,6 +244,19 @@ header{position:relative}
 .ccell.on{background:linear-gradient(135deg,var(--sage),var(--sage-deep));color:#13251a;font-weight:700;box-shadow:0 2px 10px rgba(110,140,115,.4)}
 .ccell.today{box-shadow:0 0 0 2px var(--glow)}
 .ccell.on.today{box-shadow:0 0 0 2px var(--glow),0 2px 10px rgba(110,140,115,.4)}
+.ccell.plan{box-shadow:inset 0 0 0 2px rgba(255,138,91,.6);color:var(--ember)}
+.ccell.plan.today{box-shadow:0 0 0 2px var(--glow),inset 0 0 0 2px rgba(255,138,91,.6)}
+.ccell[data-iso]{cursor:pointer}
+.wktxt{font-size:13px;color:var(--lav);margin:2px 2px 6px}
+.wktxt b{color:var(--cream)}
+.wktxt.met b{color:var(--gold)}
+.wkrow{display:flex;align-items:center;gap:10px;margin:0 2px 10px}
+.wkbar{flex:1;height:8px;border-radius:6px;background:rgba(255,255,255,.08);overflow:hidden}
+.wkfill{height:100%;border-radius:6px;background:linear-gradient(90deg,var(--glow),var(--ember));transition:width .35s ease}
+.wkrow.met .wkfill{background:linear-gradient(90deg,var(--gold),var(--ember))}
+.gbtn{width:30px;height:30px;flex:0 0 auto;border:none;border-radius:8px;background:rgba(255,255,255,.08);color:var(--cream);font-size:18px;line-height:1;cursor:pointer}
+.gbtn:active{background:rgba(255,255,255,.18)}
+.calhint{font-size:11.5px;color:var(--muted);text-align:center;margin:0 0 8px;opacity:.85}
 .flexform{margin-top:14px}
 .flexform .frow{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:9px}
 .flexform .frow > *{flex:1 1 130px;min-width:0}
@@ -248,22 +274,82 @@ header{position:relative}
 .flexrow .fnote{color:var(--muted);flex:1}
 .flexrow .xbtn{margin-left:auto}
 </style>
+<style>
+/* ───── Moonlight Orchid · celestial-boho planner skin ───── */
+.wrap{position:relative; z-index:1}
+body::before{content:""; position:fixed; inset:0; z-index:0; pointer-events:none;
+  background-image:radial-gradient(rgba(253,238,244,.05) 1px, transparent 1.4px);
+  background-size:23px 23px; opacity:.65}
+
+/* ─ Cover ─ */
+header{padding:4px 4px 18px}
+.cover{position:relative; padding:30px 18px 20px; border-radius:30px 30px 22px 22px;
+  border:1px solid rgba(255,201,60,.22);
+  background:
+    radial-gradient(120% 85% at 50% 0%, rgba(255,201,60,.11), transparent 60%),
+    radial-gradient(100% 75% at 50% 38%, rgba(255,77,141,.12), transparent 72%),
+    linear-gradient(180deg, rgba(255,255,255,.045), rgba(255,255,255,.012));
+  box-shadow:0 20px 55px rgba(0,0,0,.30), inset 0 0 0 6px rgba(255,255,255,.02)}
+.cover::before{content:"\2726"; position:absolute; top:13px; left:16px; color:var(--gold); font-size:12px; opacity:.55}
+.wordmark{position:relative}
+.mantra{margin:13px auto 2px; max-width:320px; font-family:var(--display); font-style:italic; font-weight:500;
+  font-size:17px; line-height:1.35; color:var(--cream); letter-spacing:.01em; cursor:pointer; user-select:none; opacity:.96}
+.gearbtn{top:13px; right:13px}
+
+/* ─ Moon-phase divider (signature) ─ */
+.moondiv{display:flex; align-items:center; justify-content:center; gap:12px; margin:16px auto 0; max-width:270px}
+.moondiv .mline{flex:1; height:1px; background:linear-gradient(90deg,transparent,rgba(255,201,60,.55),transparent)}
+.moon{width:15px; height:15px; flex:0 0 auto; border-radius:50%;
+  background:linear-gradient(135deg, var(--gold), var(--ember));
+  -webkit-mask:radial-gradient(circle at 72% 47%, transparent 6.4px, #000 6.9px);
+          mask:radial-gradient(circle at 72% 47%, transparent 6.4px, #000 6.9px);
+  filter:drop-shadow(0 0 6px rgba(255,201,60,.45))}
+
+/* ─ Eyebrow label ─ */
+.eyebrow{display:flex; align-items:center; justify-content:center; gap:11px; margin:22px 2px 12px;
+  font-family:var(--ui); font-size:10.5px; letter-spacing:.26em; text-transform:uppercase; color:var(--gold); opacity:.82}
+.eyebrow::before,.eyebrow::after{content:""; width:28px; height:1px; background:linear-gradient(90deg,transparent,rgba(255,201,60,.6))}
+.eyebrow::after{background:linear-gradient(270deg,transparent,rgba(255,201,60,.6))}
+
+/* ─ Section headers as planner dividers ─ */
+.moves-top, .progress-head{align-items:center; border-bottom:1px solid rgba(255,201,60,.15); padding-bottom:10px; margin:4px 2px 15px}
+.moves-top .lead, .progress-head .lead{font-size:21px; color:var(--cream); letter-spacing:.005em; display:flex; align-items:center; gap:9px}
+.moves-top .lead::before, .progress-head .lead::before{content:""; width:16px; height:16px; flex:0 0 auto; border-radius:50%;
+  background:linear-gradient(135deg, var(--gold), var(--ember));
+  -webkit-mask:radial-gradient(circle at 72% 47%, transparent 6.9px, #000 7.3px);
+          mask:radial-gradient(circle at 72% 47%, transparent 6.9px, #000 7.3px)}
+
+/* ─ Studio + cards + tabs warmth ─ */
+.studio{margin-top:9px; opacity:.95}
+.card{box-shadow:0 12px 32px rgba(0,0,0,.17)}
+.empty .ttl{font-style:italic}
+.tabs{background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.022)); border-color:rgba(255,201,60,.16)}
+.tab{color:var(--lav)}
+.tab.active{box-shadow:0 6px 18px rgba(255,77,141,.26), 0 0 0 1px rgba(255,201,60,.28)}
+</style>
 </head>
 <body>
 <div class="wrap">
   <header>
-    <button class="gearbtn" id="gearBtn" title="Backup &amp; settings" aria-label="Settings">⚙</button>
-    <div class="wordmark">Pole <span>Journal</span></div>
-    <div class="studio">Moonlight Orchid</div>
+    <div class="cover">
+      <button class="gearbtn" id="gearBtn" title="Backup &amp; settings" aria-label="Settings">⚙</button>
+      <div class="wordmark">Pole <span>Journal</span></div>
+      <div class="studio">Moonlight Orchid</div>
+      <div class="mantra" id="mantra" title="Tap for another"></div>
+      <div class="moondiv" aria-hidden="true"><span class="mline"></span><span class="moon"></span><span class="mline"></span></div>
+    </div>
     <div class="tip" id="tip" title="Tap for another tip"></div>
   </header>
 
+  <div class="eyebrow">Your practice at a glance</div>
   <section class="stats" id="stats"></section>
 
   <nav class="tabs">
     <button class="tab active" data-tab="log">📓 Log</button>
     <button class="tab" data-tab="plans">📋 Plans</button>
+    <button class="tab" data-tab="routines">💃 Routines</button>
     <button class="tab" data-tab="skills">📚 Moves</button>
+    <button class="tab" data-tab="progress">📈 Progress</button>
     <button class="tab" data-tab="goals">🎯 Goals</button>
   </nav>
 
@@ -292,6 +378,31 @@ header{position:relative}
     <div class="moves-top"><div class="lead">Plans</div><div class="count" id="planCount"></div></div>
     <button class="btn" id="newPlan">＋ New plan</button>
     <div class="plans" id="plans"></div>
+  </section>
+
+  <section class="panel" id="panel-routines">
+    <div class="moves-top"><div class="lead">Routines</div><div class="count" id="routineCount"></div></div>
+    <button class="btn" id="newRoutine">＋ New routine</button>
+    <div class="plans" id="routines"></div>
+  </section>
+
+  <section class="panel" id="panel-progress">
+    <div class="moves-top"><div class="lead">Your journey</div></div>
+    <div class="card" id="journey"></div>
+    <div class="card" style="margin-top:14px">
+      <div class="setblock" style="margin-bottom:0">
+        <h3>Benchmarks</h3>
+        <p>Track anything you want to watch improve — a split depth, how long you hold a chopper, pull-ups. Numbers only; each one draws a trend line.</p>
+        <div class="flexform">
+          <div class="frow"><input type="text" id="flexMetric" list="flexMetrics" placeholder="What (e.g. Front split — R, Chopper hold)"><datalist id="flexMetrics"></datalist></div>
+          <div class="frow"><input type="number" id="flexValue" inputmode="decimal" step="any" placeholder="Number"><input type="text" id="flexUnit" placeholder="Unit (cm, sec, reps)" style="max-width:140px"><input type="date" id="flexDate"></div>
+          <div class="frow"><input type="text" id="flexNote" placeholder="Note (optional)"></div>
+          <div class="actions" style="margin-top:2px"><button class="btn sm" id="addFlexBtn">Add entry</button><span id="flexMsg" style="font-size:13px;color:var(--muted);margin-left:10px;align-self:center"></span></div>
+        </div>
+        <div class="count" id="flexCount" style="margin:12px 0 6px"></div>
+        <div id="flexList"></div>
+      </div>
+    </div>
   </section>
 
   <section class="panel" id="panel-goals">
@@ -352,6 +463,7 @@ header{position:relative}
 </div>
 
 <div class="overlay" id="planOverlay"><div class="plansheet" id="planSheet"></div></div>
+<div class="overlay" id="routineOverlay"><div class="plansheet" id="routineSheet"></div></div>
 <div class="overlay" id="planEditOverlay">
   <div class="sheet">
     <h2 id="planEditTitle">New plan</h2>
@@ -360,6 +472,20 @@ header{position:relative}
     <div class="field"><label>Plan</label><textarea id="planBodyInput" style="min-height:240px" placeholder="# 1. Warm-Up&#10;- 5 min cardio&#10;- mobility flow"></textarea></div>
     <div class="actions"><button class="btn ghost" id="planEditCancel">Cancel</button><button class="btn" id="planEditSave">Save plan</button></div>
     <div class="actions" id="planEditDeleteRow" style="display:none"><button class="btn danger" id="planEditDelete">Delete this plan</button></div>
+  </div>
+</div>
+<div class="overlay" id="routineEditOverlay">
+  <div class="sheet">
+    <h2 id="routineEditTitle">New routine</h2>
+    <div class="sub">Build the sequence: <b>## Section</b> (Intro, Chorus…), <b>- move</b> for each step. Plain lines become transition notes.</div>
+    <div class="field"><label>Title</label><input type="text" id="rTitleInput" placeholder="e.g. Moonlight Flow"></div>
+    <div class="field"><label>Song</label><input type="text" id="rSongInput" placeholder="Artist — track"></div>
+    <div class="field"><label>Mood / theme</label><input type="text" id="rMoodInput" placeholder="e.g. Smooth · sultry"></div>
+    <div class="field"><label>Length (optional)</label><input type="text" id="rLengthInput" placeholder="e.g. ~2 min"></div>
+    <div class="field"><label>Sequence</label><textarea id="rBodyInput" style="min-height:220px" placeholder="## Intro&#10;- Slow walk to the pole&#10;- Body roll&#10;## Chorus&#10;- Genie Spin&#10;- Crucifix to Sit"></textarea></div>
+    <div class="field"><label>Notes (optional)</label><textarea id="rNotesInput" placeholder="Costume, problem spots, where to add flair…"></textarea></div>
+    <div class="actions"><button class="btn ghost" id="routineEditCancel">Cancel</button><button class="btn" id="routineEditSave">Save routine</button></div>
+    <div class="actions" id="routineEditDeleteRow" style="display:none"><button class="btn danger" id="routineEditDelete">Delete this routine</button></div>
   </div>
 </div>
 <script>
@@ -408,6 +534,7 @@ var SEED = {
 };
 var DEFAULT_GOALS = ["Hold a clean invert for 10 seconds","Nail my first Ayesha","Flat forward splits"];
 var TIPS = ["Warm up wrists, shoulders, and core before you spin or invert.","A crash mat under the pole is your best friend while learning inverts.","Film your attempts — your eyes catch what your body can't feel.","Clean, dry skin and a clean pole grip better than any amount of grip aid.","Progress isn't linear. Some days you fly, some days you just hold on. Both count.","Pole kisses fade. Strength stays.","Rest days build the muscle you train. Don't skip them.","Master the basics cold — every advanced move is built on them.","Hydrate before you practise; sweaty palms slip.","Engage first: shoulders down and back, core switched on, then lift."];
+var MANTRAS = ["Soft and unstoppable.","Magic in motion.","You are the moment.","Bloom on your own time.","Rooted, radiant, rising.","Grace with grip.","Your strength is a love language.","Made of moonlight and muscle.","Flow, flourish, repeat.","The pole bends to you.","Effortless is earned.","Crowned before you climb."];
 
 var SEED_VERSION = 4;
 var OLD_DEFAULT_NAMES = ["Fireman Spin","Chair Spin","Front Hook Spin","Back Hook Spin","Attitude Spin","Carousel","Basic Climb","Pole Sit","Crucifix","Outside Leg Hang","Inside Leg Hang","Cross-Ankle Release","Tuck Invert (Chopper)","Straddle Invert","Gemini / Scorpio","Butterfly","Inverted Crucifix","Superman","Jasmine","Genie","Allegra","Brass Monkey","Jade Split","Ayesha","Shoulder Mount","Handspring","Iron X","Iguana Mount","Forward Splits","Middle Splits","Bridge / Backbend","Pole Hold (grip)","Active Flexibility"];
@@ -434,6 +561,7 @@ function migrateSkills(old){
 }
 
 var plans=[], planChecks={}, currentPlanId=null, planEditId=null;
+var routines=[], currentRoutineId=null, routineEditId=null;
 var PLAN_SEED_VERSION = 2;
 var PLAN_SEED=[
   {seedKey:"ppa-wk8", title:"PPA Foundations · Week 8", focus:["Spins","Climbs","Strength","Flow"], body:`# PPA Foundations · Week 8
@@ -588,9 +716,89 @@ function savePlanFromEditor(){
 }
 function deletePlanFromEditor(){ if(!planEditId) return; plans=plans.filter(function(x){return x.id!==planEditId;}); delete planChecks[planEditId]; save("polelog:plans",plans); save("polelog:planchecks",planChecks); closePlanEditor(); renderPlans(); }
 
+var ROUTINE_SEED=[{ title:"Moonlight Flow (example)", song:"pick your song", mood:"Smooth · sultry", length:"~2 min", notes:"This is just an example to show the format — edit it or delete it and build your own.", body:`## Intro — floor
+- Slow walk to the pole
+- Body roll up
+## Build
+- Step around
+- Front Hook Spin
+- Crab Spin
+## Chorus — the moment
+- Pole walk into Genie Spin
+- Upright Crucifix
+- Crucifix to Sit
+## Outro — down
+- Slide to the floor
+- Final pose` }];
+function seedToRoutine(r){ return {id:uid(), title:r.title, song:r.song||"", mood:r.mood||"", length:r.length||"", body:r.body, notes:r.notes||""}; }
+function routineMeta(r){ var bits=[]; if(r.song) bits.push("🎵 "+r.song); var n=planTotalItems(r.body); bits.push(n+(n===1?" move":" moves")); return bits.join(" · "); }
+function renderRoutines(){
+  var el=document.getElementById("routines"); if(!el) return;
+  var cnt=document.getElementById("routineCount"); if(cnt) cnt.textContent=routines.length+(routines.length===1?" routine":" routines");
+  if(!routines.length){ el.innerHTML='<div class="card empty"><div class="big">💃</div><div class="ttl">No routines yet</div><div>Tap \u201CNew routine\u201D to choreograph a dance — pick a song, set the mood, build your sequence of moves.</div></div>'; return; }
+  el.innerHTML=routines.map(function(r){
+    var chips=(r.mood||r.length)?('<div class="chips">'+(r.mood?'<span class="chip">'+esc(r.mood)+'</span>':'')+(r.length?'<span class="chip">'+esc(r.length)+'</span>':'')+'</div>'):'';
+    return '<div class="card plan-card" data-id="'+r.id+'"><div class="pt">'+esc(r.title)+'</div>'+chips+'<div class="pmeta">'+esc(routineMeta(r))+'</div></div>';
+  }).join("");
+  [].forEach.call(el.querySelectorAll(".plan-card"),function(c){ c.addEventListener("click",function(){ openRoutine(c.getAttribute("data-id")); }); });
+}
+function openRoutine(id){
+  currentRoutineId=id; var r=routines.find(function(x){return x.id===id;}); if(!r) return;
+  var idx=0, html="";
+  (r.body||"").split("\n").forEach(function(l){ var o=planLineType(l);
+    if(o.t==="h1"||o.t==="h2") html+='<div class="ph2">'+esc(o.x)+'</div>';
+    else if(o.t==="item"){ idx++; html+='<div class="ritem"><span class="rnum">'+idx+'</span><span class="ptext">'+esc(o.x)+'</span></div>'; }
+    else if(o.t==="note") html+='<div class="pnote">'+esc(o.x)+'</div>';
+  });
+  var meta=[]; if(r.song) meta.push("🎵 "+esc(r.song)); if(r.mood) meta.push("🎭 "+esc(r.mood)); if(r.length) meta.push("⏱ "+esc(r.length));
+  var sheet=document.getElementById("routineSheet");
+  sheet.innerHTML='<div class="planhead"><h2>'+esc(r.title)+'</h2></div>'+(meta.length?'<div class="rmeta">'+meta.join(' &nbsp;·&nbsp; ')+'</div>':'')+'<div class="rhint">tap a move to mark it as you run through</div><div class="planbody">'+html+'</div>'+(r.notes?'<div class="rnotes">'+esc(r.notes)+'</div>':'')+'<div class="planactions"><button class="btn" id="routineLog">Log this session</button></div><div class="planactions"><button class="btn ghost sm" id="routineEdit">Edit</button><button class="btn ghost sm" id="routineClose">Close</button></div>';
+  [].forEach.call(sheet.querySelectorAll(".ritem"),function(it){ it.addEventListener("click",function(){ it.classList.toggle("done"); }); });
+  document.getElementById("routineLog").addEventListener("click",function(){ logFromRoutine(r); });
+  document.getElementById("routineEdit").addEventListener("click",function(){ closeRoutine(); openRoutineEditor(id); });
+  document.getElementById("routineClose").addEventListener("click",closeRoutine);
+  var ov=document.getElementById("routineOverlay"); ov.classList.add("open"); ov.scrollTop=0; sheet.scrollTop=0;
+}
+function closeRoutine(){ document.getElementById("routineOverlay").classList.remove("open"); }
+function logFromRoutine(r){ closeRoutine(); openModal(null,{focus:["Flow"], notes:"Danced routine: "+r.title}); }
+function openRoutineEditor(id){
+  routineEditId=id||null; var r=id?routines.find(function(x){return x.id===id;}):null;
+  document.getElementById("routineEditTitle").textContent=r?"Edit routine":"New routine";
+  document.getElementById("rTitleInput").value=r?r.title:"";
+  document.getElementById("rSongInput").value=r?(r.song||""):"";
+  document.getElementById("rMoodInput").value=r?(r.mood||""):"";
+  document.getElementById("rLengthInput").value=r?(r.length||""):"";
+  document.getElementById("rBodyInput").value=r?(r.body||""):"";
+  document.getElementById("rNotesInput").value=r?(r.notes||""):"";
+  document.getElementById("routineEditDeleteRow").style.display=r?"flex":"none";
+  var ov=document.getElementById("routineEditOverlay"); ov.classList.add("open"); ov.scrollTop=0;
+}
+function closeRoutineEditor(){ document.getElementById("routineEditOverlay").classList.remove("open"); }
+function saveRoutineFromEditor(){
+  var title=document.getElementById("rTitleInput").value.trim()||"Untitled routine";
+  var song=document.getElementById("rSongInput").value.trim(), mood=document.getElementById("rMoodInput").value.trim(), length=document.getElementById("rLengthInput").value.trim(), body=document.getElementById("rBodyInput").value, notes=document.getElementById("rNotesInput").value.trim();
+  if(routineEditId){ routines=routines.map(function(x){ return x.id===routineEditId?{id:x.id,title:title,song:song,mood:mood,length:length,body:body,notes:notes}:x; }); }
+  else { routines.push({id:uid(),title:title,song:song,mood:mood,length:length,body:body,notes:notes}); }
+  save("polelog:routines",routines); closeRoutineEditor(); renderRoutines();
+}
+function deleteRoutineFromEditor(){ if(!routineEditId) return; routines=routines.filter(function(x){return x.id!==routineEditId;}); save("polelog:routines",routines); closeRoutineEditor(); renderRoutines(); }
+
+function longestStreak(){ var days=Object.keys(trainedSet()).sort(); if(!days.length) return 0; var best=1,cur=1; for(var i=1;i<days.length;i++){ var diff=Math.round((parseDate(days[i])-parseDate(days[i-1]))/86400000); if(diff===1){ cur++; if(cur>best) best=cur; } else if(diff>1){ cur=1; } } return best; }
+function renderProgress(){ var el=document.getElementById("journey"); if(!el) return;
+  var totalMin=0; sessions.forEach(function(s){ totalMin+=(Number(s.duration)||0); });
+  var hrs=totalMin/60; var hrsTxt=hrs>=10?Math.round(hrs):(Math.round(hrs*10)/10);
+  var now=new Date(), mo=now.getMonth(), yr=now.getFullYear(), thisMonth=0;
+  sessions.forEach(function(s){ var d=parseDate(s.date); if(d.getMonth()===mo && d.getFullYear()===yr) thisMonth++; });
+  var mastered=skills.filter(function(s){return s.status==="mastered";}).length;
+  var inprog=skills.filter(function(s){return s.status==="learning"||s.status==="got";}).length;
+  var rows=[{n:sessions.length,l:"Total sessions"},{n:hrsTxt,l:"Hours on the pole"},{n:currentStreak(),l:"Current streak"},{n:longestStreak(),l:"Longest streak"},{n:thisMonth,l:"This month"},{n:mastered,l:"Moves mastered",gold:true},{n:inprog,l:"In progress"}];
+  el.innerHTML='<div class="jgrid">'+rows.map(function(r){ return '<div class="jtile'+(r.gold?" gold":"")+'"><span class="jnum">'+r.n+'</span><span class="jlbl">'+esc(r.l)+'</span></div>'; }).join("")+'</div>';
+}
+
 var flex=[];
+var planned={}, weeklyGoal=3;
 var calRef=new Date(); calRef.setDate(1);
-var FLEX_PRESETS=["Front Split — Right","Front Split — Left","Middle Split","Oversplit","Leg Hold — Front","Leg Hold — Side","Bridge","Shoulder Flexibility"];
+var FLEX_PRESETS=["Front Split — Right","Front Split — Left","Middle Split","Oversplit","Bridge","Shoulder Flexibility","Chopper Hold (sec)","Plank (sec)","Pull-ups","Push-ups","Invert Hold (sec)","Grip Hang (sec)"];
 
 function trainedSet(){ var s={}; sessions.forEach(function(x){ s[x.date]=true; }); return s; }
 function isoOf(dt){ var y=dt.getFullYear(),m=dt.getMonth(),da=dt.getDate(); return y+"-"+(m<9?"0":"")+(m+1)+"-"+(da<10?"0":"")+da; }
@@ -599,6 +807,7 @@ function currentStreak(){
   if(!set[isoOf(d)]){ d.setDate(d.getDate()-1); if(!set[isoOf(d)]) return 0; }
   var n=0; while(set[isoOf(d)]){ n++; d.setDate(d.getDate()-1); } return n;
 }
+function weekRange(d){ var s=new Date(d); s.setHours(0,0,0,0); s.setDate(s.getDate()-s.getDay()); var e=new Date(s); e.setDate(s.getDate()+6); return [s,e]; }
 function renderCalendar(){
   var el=document.getElementById("cal"); if(!el) return;
   var set=trainedSet();
@@ -606,22 +815,34 @@ function renderCalendar(){
   var first=new Date(y,m,1); var startDow=first.getDay();
   var daysIn=new Date(y,m+1,0).getDate();
   var today=new Date(); today.setHours(0,0,0,0);
+  var todayIso=isoOf(today);
   var monthName=first.toLocaleDateString(undefined,{month:"long",year:"numeric"});
   var streak=currentStreak();
+  var wr=weekRange(today), wDays=0;
+  for(var dd=new Date(wr[0]); dd<=wr[1]; dd.setDate(dd.getDate()+1)){ if(set[isoOf(dd)]) wDays++; }
+  var goal=Math.max(1,weeklyGoal||3);
+  var pct=Math.min(1,wDays/goal)*100; var met=wDays>=goal;
   var dow=["S","M","T","W","T","F","S"]; var cells="";
   dow.forEach(function(d){ cells+='<div class="cdow">'+d+'</div>'; });
   for(var i=0;i<startDow;i++){ cells+='<div class="ccell empty"></div>'; }
   for(var day=1; day<=daysIn; day++){
     var iso=y+"-"+(m<9?"0":"")+(m+1)+"-"+(day<10?"0":"")+day;
     var on=!!set[iso];
-    var isToday=(y===today.getFullYear() && m===today.getMonth() && day===today.getDate());
-    cells+='<div class="ccell'+(on?" on":"")+(isToday?" today":"")+'">'+day+'</div>';
+    var isToday=(iso===todayIso);
+    var isPlan=!on && !!planned[iso] && iso>=todayIso;
+    cells+='<div class="ccell'+(on?" on":"")+(isPlan?" plan":"")+(isToday?" today":"")+'" data-iso="'+iso+'">'+day+'</div>';
   }
   el.innerHTML='<div class="calhead"><button class="calnav" id="calPrev">‹</button><div class="calttl">'+monthName+'</div><button class="calnav" id="calNext">›</button></div>'+
+    '<div class="wktxt'+(met?' met':'')+'">🎯 <b>'+wDays+'/'+goal+'</b> this week'+(met?' ✓ goal met':'')+'</div>'+
+    '<div class="wkrow'+(met?' met':'')+'"><button class="gbtn" id="goalDown" aria-label="lower goal">−</button><div class="wkbar"><div class="wkfill" style="width:'+pct+'%"></div></div><button class="gbtn" id="goalUp" aria-label="raise goal">+</button></div>'+
     '<div class="calstreak">'+(streak>0?('🔥 '+streak+'-day streak'):'No active streak — train today to start one')+'</div>'+
+    '<div class="calhint">tap a day to plan a session</div>'+
     '<div class="calgrid">'+cells+'</div>';
   document.getElementById("calPrev").addEventListener("click",function(){ calRef.setMonth(calRef.getMonth()-1); renderCalendar(); });
   document.getElementById("calNext").addEventListener("click",function(){ calRef.setMonth(calRef.getMonth()+1); renderCalendar(); });
+  document.getElementById("goalDown").addEventListener("click",function(){ weeklyGoal=Math.max(1,(weeklyGoal||3)-1); save("polelog:weeklyGoal",weeklyGoal); renderCalendar(); });
+  document.getElementById("goalUp").addEventListener("click",function(){ weeklyGoal=Math.min(7,(weeklyGoal||3)+1); save("polelog:weeklyGoal",weeklyGoal); renderCalendar(); });
+  el.querySelector(".calgrid").addEventListener("click",function(ev){ var c=ev.target.closest(".ccell"); if(!c) return; var iso=c.getAttribute("data-iso"); if(!iso) return; if(trainedSet()[iso]) return; if(iso<todayIso) return; if(planned[iso]) delete planned[iso]; else planned[iso]=true; save("polelog:planned",planned); renderCalendar(); });
 }
 
 function sparkline(vals){
@@ -635,7 +856,7 @@ function renderFlex(){
   var el=document.getElementById("flexList"); if(!el) return;
   var dl=document.getElementById("flexMetrics"); if(dl && !dl.children.length){ dl.innerHTML=FLEX_PRESETS.map(function(mm){ return '<option value="'+esc(mm)+'"></option>'; }).join(""); }
   var cnt=document.getElementById("flexCount"); if(cnt){ cnt.textContent=flex.length+(flex.length===1?" entry":" entries"); }
-  if(!flex.length){ el.innerHTML='<div class="card empty"><div class="big">🤸🏾‍♀️</div><div class="ttl">No measurements yet</div><div>Log a split depth or leg-hold number above to start tracking your flexibility over time.</div></div>'; return; }
+  if(!flex.length){ el.innerHTML='<div class="card empty"><div class="big">📈</div><div class="ttl">No benchmarks yet</div><div>Add a number above — a split depth, a hold time in seconds, reps — and watch the trend line climb over time.</div></div>'; return; }
   var groups={}, order=[];
   flex.forEach(function(e){ var k=e.metric||"Other"; if(!groups[k]){ groups[k]=[]; order.push(k); } groups[k].push(e); });
   var html="";
@@ -689,11 +910,19 @@ function addFlex(){
     if((planVer||1) < PLAN_SEED_VERSION){ plans = migratePlans(plans); await save("polelog:plans", plans); await save("polelog:planSeedVersion", PLAN_SEED_VERSION); } }
   planChecks = await load("polelog:planchecks", {});
   flex = await load("polelog:flex", []);
-  setTip(); buildStaticPickers(); renderAll(); wire();
+  planned = await load("polelog:planned", {});
+  weeklyGoal = await load("polelog:weeklyGoal", 3);
+  var _ti=todayISO(), _ch=false; for(var k in planned){ if(planned.hasOwnProperty(k) && k<_ti){ delete planned[k]; _ch=true; } } if(_ch) await save("polelog:planned",planned);
+  var rawRoutines = await store.get("polelog:routines");
+  if(rawRoutines == null){ routines = ROUTINE_SEED.map(seedToRoutine); await save("polelog:routines", routines); }
+  else { try{ routines = JSON.parse(rawRoutines); }catch(e){ routines = []; } }
+  setTip(); setMantra(); buildStaticPickers(); renderAll(); wire();
+  var _fd=document.getElementById("flexDate"); if(_fd) _fd.value=todayISO();
 })();
 
-function renderAll(){ renderStats(); renderSessions(); renderSkills(); renderGoals(); renderPlans(); renderCalendar(); }
+function renderAll(){ renderStats(); renderSessions(); renderSkills(); renderGoals(); renderPlans(); renderRoutines(); renderCalendar(); }
 function setTip(){ var t = TIPS[Math.floor(Math.random()*TIPS.length)]; document.getElementById("tip").innerHTML = '<span class="spark">💫</span> '+esc(t); }
+function setMantra(){ var el=document.getElementById("mantra"); if(!el) return; el.textContent = "\u201C"+MANTRAS[Math.floor(Math.random()*MANTRAS.length)]+"\u201D"; }
 
 function renderStats(){
   var now=new Date(); now.setHours(0,0,0,0); var weekAgo=new Date(now); weekAgo.setDate(now.getDate()-6);
@@ -703,6 +932,7 @@ function renderStats(){
   var mastered = skills.filter(function(s){return s.status==="mastered";}).length;
   var cards=[{n:thisWeek,l:"This week"},{n:sessions.length,l:"Sessions"},{n:hrsTxt,l:"Hours"},{n:mastered,l:"Mastered",gold:true}];
   document.getElementById("stats").innerHTML = cards.map(function(c){ return '<div class="stat'+(c.gold?" gold":"")+'"><span class="num">'+c.n+'</span><span class="lbl">'+c.l+'</span></div>'; }).join("");
+  renderProgress();
 }
 
 function sortedSessions(){ return sessions.slice().sort(function(a,b){ if(a.date!==b.date) return a.date<b.date?1:-1; return (b.createdAt||0)-(a.createdAt||0); }); }
@@ -826,18 +1056,20 @@ function saveSession(){
     date:document.getElementById("fDate").value||todayISO(), duration:document.getElementById("fDur").value?Number(document.getElementById("fDur").value):null,
     focus:focus, moves:mMoves.slice(), mood:mMood, intensity:mInt, flex:mFlex, notes:document.getElementById("fNotes").value.trim() };
   if(editingId){ sessions=sessions.map(function(x){return x.id===editingId?obj:x;}); } else { sessions.push(obj); }
-  save("polelog:sessions",sessions); closeModal(); renderStats(); renderSessions();
+  save("polelog:sessions",sessions); closeModal(); renderStats(); renderSessions(); renderCalendar();
 }
-function deleteSession(){ if(!editingId) return; sessions=sessions.filter(function(x){return x.id!==editingId;}); save("polelog:sessions",sessions); closeModal(); renderStats(); renderSessions(); }
+function deleteSession(){ if(!editingId) return; sessions=sessions.filter(function(x){return x.id!==editingId;}); save("polelog:sessions",sessions); closeModal(); renderStats(); renderSessions(); renderCalendar(); }
 
-function refreshExport(){ document.getElementById("exportBox").value = JSON.stringify({sessions:sessions,skills:skills,goals:goals,plans:plans,planChecks:planChecks,flex:flex},null,2); }
+function refreshExport(){ document.getElementById("exportBox").value = JSON.stringify({sessions:sessions,skills:skills,goals:goals,plans:plans,planChecks:planChecks,flex:flex,planned:planned,weeklyGoal:weeklyGoal,routines:routines},null,2); }
 async function copyExport(){ var box=document.getElementById("exportBox"); var btn=document.getElementById("copyBtn");
   try{ await navigator.clipboard.writeText(box.value); btn.textContent="Copied ✓"; }catch(e){ box.focus(); box.select(); btn.textContent="Select all & copy"; }
   setTimeout(function(){ btn.textContent="Copy"; },1800); }
 function importBackup(){ var msg=document.getElementById("importMsg"); var raw=document.getElementById("importBox").value.trim(); if(!raw){ msg.textContent="Paste your backup text first."; return; }
   try{ var data=JSON.parse(raw); if(Array.isArray(data.sessions)) sessions=data.sessions; if(Array.isArray(data.skills)) skills=data.skills; if(Array.isArray(data.goals)) goals=data.goals;
     if(Array.isArray(data.plans)) plans=data.plans; if(data.planChecks && typeof data.planChecks==="object") planChecks=data.planChecks; if(Array.isArray(data.flex)) flex=data.flex;
-    save("polelog:sessions",sessions); save("polelog:skills",skills); save("polelog:goals",goals); save("polelog:plans",plans); save("polelog:planchecks",planChecks); save("polelog:flex",flex); renderAll(); refreshExport();
+    if(data.planned && typeof data.planned==="object") planned=data.planned; if(typeof data.weeklyGoal==="number") weeklyGoal=data.weeklyGoal;
+    if(Array.isArray(data.routines)) routines=data.routines;
+    save("polelog:sessions",sessions); save("polelog:skills",skills); save("polelog:goals",goals); save("polelog:plans",plans); save("polelog:planchecks",planChecks); save("polelog:flex",flex); save("polelog:planned",planned); save("polelog:weeklyGoal",weeklyGoal); save("polelog:routines",routines); renderAll(); refreshExport();
     document.getElementById("importBox").value=""; msg.textContent="Loaded. Your log is restored."; }
   catch(e){ msg.textContent="That doesn't look like a valid backup."; } }
 var resetArmed=false, resetTimer=null;
@@ -845,9 +1077,9 @@ function resetAll(){ var btn=document.getElementById("resetBtn");
   if(!resetArmed){ resetArmed=true; btn.textContent="Tap again to erase"; resetTimer=setTimeout(function(){ resetArmed=false; btn.textContent="Erase everything"; },3500); return; }
   clearTimeout(resetTimer); resetArmed=false; btn.textContent="Erase everything";
   sessions=[]; skills=buildDefaults(); goals=DEFAULT_GOALS.map(function(t){ return {id:uid(),text:t,done:false}; });
-  plans=PLAN_SEED.map(seedToPlan); planChecks={}; flex=[];
+  plans=PLAN_SEED.map(seedToPlan); planChecks={}; flex=[]; planned={}; weeklyGoal=3; routines=ROUTINE_SEED.map(seedToRoutine);
   save("polelog:sessions",sessions); save("polelog:skills",skills); save("polelog:skillsSeedVersion",SEED_VERSION); save("polelog:goals",goals);
-  save("polelog:plans",plans); save("polelog:planSeedVersion",PLAN_SEED_VERSION); save("polelog:planchecks",planChecks); save("polelog:flex",flex);
+  save("polelog:plans",plans); save("polelog:planSeedVersion",PLAN_SEED_VERSION); save("polelog:planchecks",planChecks); save("polelog:flex",flex); save("polelog:planned",planned); save("polelog:weeklyGoal",weeklyGoal); save("polelog:routines",routines);
   collapsed={}; skillFilter="all"; renderAll(); refreshExport(); }
 
 function celebrate(){
@@ -865,6 +1097,7 @@ function wire(){
     [].forEach.call(document.querySelectorAll(".panel"),function(p){p.classList.remove("active");}); document.getElementById("panel-"+name).classList.add("active");
     if(name==="settings") refreshExport(); window.scrollTo({top:0,behavior:"smooth"}); }); });
   document.getElementById("tip").addEventListener("click",setTip);
+  var _mn=document.getElementById("mantra"); if(_mn) _mn.addEventListener("click",setMantra);
   document.getElementById("newSession").addEventListener("click",function(){ openModal(null); });
   document.getElementById("cancelBtn").addEventListener("click",closeModal);
   document.getElementById("saveBtn").addEventListener("click",saveSession);
@@ -888,6 +1121,13 @@ function wire(){
   document.getElementById("planEditCancel").addEventListener("click",closePlanEditor);
   document.getElementById("planEditSave").addEventListener("click",savePlanFromEditor);
   document.getElementById("planEditDelete").addEventListener("click",deletePlanFromEditor);
+  document.getElementById("newRoutine").addEventListener("click",function(){ openRoutineEditor(null); });
+  document.getElementById("routineOverlay").addEventListener("click",function(e){ if(e.target.id==="routineOverlay") closeRoutine(); });
+  document.getElementById("routineEditOverlay").addEventListener("click",function(e){ if(e.target.id==="routineEditOverlay") closeRoutineEditor(); });
+  document.getElementById("routineEditCancel").addEventListener("click",closeRoutineEditor);
+  document.getElementById("routineEditSave").addEventListener("click",saveRoutineFromEditor);
+  document.getElementById("routineEditDelete").addEventListener("click",deleteRoutineFromEditor);
+  document.getElementById("addFlexBtn").addEventListener("click",addFlex);
   document.getElementById("gearBtn").addEventListener("click",function(){ [].forEach.call(document.querySelectorAll(".tab"),function(x){x.classList.remove("active");}); [].forEach.call(document.querySelectorAll(".panel"),function(p){p.classList.remove("active");}); document.getElementById("panel-settings").classList.add("active"); refreshExport(); window.scrollTo({top:0,behavior:"smooth"}); });
 }
 </script>
