@@ -326,40 +326,184 @@ header{padding:4px 4px 18px}
 .tabs{background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.022)); border-color:rgba(255,201,60,.16)}
 .tab{color:var(--lav)}
 .tab.active{box-shadow:0 6px 18px rgba(255,77,141,.26), 0 0 0 1px rgba(255,201,60,.28)}
+/* ─ Openable diary cover ─ */
+#diaryCover{position:fixed; inset:0; z-index:200; display:flex; align-items:center; justify-content:center; padding:32px;
+  transform-origin:left center; transition:transform .85s cubic-bezier(.62,.04,.2,1), opacity .7s ease;
+  background:
+    radial-gradient(rgba(253,238,244,.045) 1px, transparent 1.4px) 0 0 / 23px 23px,
+    radial-gradient(120% 90% at 50% 10%, rgba(255,77,141,.16), transparent 55%),
+    radial-gradient(110% 80% at 50% 102%, rgba(120,45,70,.45), transparent 60%),
+    linear-gradient(160deg,#2A1230, #190A20 55%, #120714)}
+#diaryCover.diary-open{transform:perspective(1900px) rotateY(-112deg); opacity:0; pointer-events:none}
+.diary-frame{position:relative; width:100%; max-width:360px; padding:58px 26px 44px; text-align:center; border-radius:20px;
+  border:1px solid rgba(255,201,60,.4);
+  box-shadow:inset 0 0 0 1px rgba(255,201,60,.16), inset 0 0 46px rgba(0,0,0,.45), 0 34px 90px rgba(0,0,0,.55);
+  background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.012))}
+.dword{font-size:clamp(56px,16vw,80px); margin-bottom:2px}
+.dstar{position:absolute; color:var(--gold); font-size:13px; opacity:.6}
+.dstar.tl{top:14px; left:16px}.dstar.tr{top:14px; right:16px}.dstar.bl{bottom:14px; left:16px}.dstar.br{bottom:14px; right:16px}
+.dhint{margin-top:22px; font-family:var(--ui); font-size:11px; letter-spacing:.26em; text-transform:uppercase; color:var(--gold); animation:dpulse 2.4s ease-in-out infinite}
+@keyframes dpulse{0%,100%{opacity:.4}50%{opacity:.9}}
+.ribbon-mark{position:absolute; top:0; left:50%; transform:translateX(74px); width:24px; height:126px; z-index:2;
+  background:linear-gradient(180deg,var(--glow),var(--ember)); box-shadow:0 8px 16px rgba(0,0,0,.4)}
+.ribbon-mark::after{content:""; position:absolute; left:0; bottom:-11px; border-left:12px solid transparent; border-right:12px solid transparent; border-top:12px solid var(--ember)}
+#closeBook{position:fixed; top:0; left:50%; transform:translateX(-50%); z-index:150; width:34px; height:24px; border:none; cursor:pointer;
+  background:linear-gradient(180deg,var(--gold),var(--ember)); border-radius:0 0 5px 5px; box-shadow:0 4px 10px rgba(0,0,0,.35); opacity:.9}
+#closeBook::after{content:""; position:absolute; left:0; bottom:-9px; border-left:17px solid transparent; border-right:17px solid transparent; border-top:9px solid var(--ember)}
+/* ─ Pages & contents navigation ─ */
+.page{display:none}
+.page.show{display:block}
+#pageView{display:none}
+@keyframes pageIn{from{opacity:0; transform:translateX(26px)} to{opacity:1; transform:none}}
+@keyframes pageBack{from{opacity:0; transform:translateX(-22px)} to{opacity:1; transform:none}}
+#pageView.anim{animation:pageIn .42s ease both}
+#contents.anim{animation:pageBack .42s ease both}
+#pageBar{display:flex; align-items:center; gap:13px; margin:2px 0 18px}
+.backribbon{border:none; cursor:pointer; font-family:var(--ui); font-weight:700; font-size:13px; letter-spacing:.02em; color:#1c0c14;
+  padding:9px 15px 9px 12px; border-radius:7px 16px 16px 7px; background:linear-gradient(180deg,var(--gold),var(--ember)); box-shadow:0 6px 16px rgba(255,138,91,.3)}
+.backribbon:active{filter:brightness(.94)}
+#pageTitle{font-family:var(--display); font-style:italic; font-size:23px; color:var(--cream)}
+
+/* ─ Contents menu ─ */
+.menu{display:flex; flex-direction:column; gap:10px; margin:2px 0 6px}
+.menu-item{display:flex; align-items:center; gap:14px; width:100%; text-align:left; cursor:pointer; padding:15px;
+  border-radius:16px; border:1px solid rgba(255,201,60,.16); color:var(--cream);
+  background:linear-gradient(180deg, rgba(255,255,255,.045), rgba(255,255,255,.012))}
+.menu-item:active{border-color:rgba(255,201,60,.42); background:linear-gradient(180deg, rgba(255,201,60,.09), rgba(255,255,255,.02))}
+.mi-ic{font-size:22px; flex:0 0 auto; width:30px; text-align:center}
+.mi-tx{flex:1; display:flex; flex-direction:column; gap:2px; min-width:0}
+.mi-tx b{font-family:var(--display); font-style:italic; font-weight:600; font-size:18px; color:var(--cream); line-height:1.15}
+.mi-tx i{font-style:normal; font-size:12px; color:var(--muted); letter-spacing:.01em}
+.mi-ar{flex:0 0 auto; color:var(--gold); font-size:21px; opacity:.7}
+
+/* ─ Nameplate / today / intention ─ */
+.nameplate{margin-top:10px; font-family:var(--display); font-style:italic; font-size:13.5px; color:var(--lav); opacity:.85; cursor:pointer}
+.dname{margin-top:12px; font-family:var(--display); font-style:italic; font-size:13px; color:var(--lav); opacity:.8}
+.todayline{text-align:center; margin-top:12px; font-family:var(--ui); font-size:10.5px; letter-spacing:.22em; text-transform:uppercase; color:var(--sage); opacity:.92}
+.intention{margin:18px 0 2px; padding:15px 16px; border-radius:16px; cursor:pointer; text-align:center; border:1px solid rgba(255,201,60,.22);
+  background:radial-gradient(120% 100% at 50% 0%, rgba(255,201,60,.08), transparent 70%), linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.012))}
+.int-lbl{display:block; font-family:var(--ui); font-size:10px; letter-spacing:.24em; text-transform:uppercase; color:var(--gold); opacity:.82; margin-bottom:5px}
+.int-val{display:block; font-family:var(--display); font-style:italic; font-size:19px; color:var(--cream)}
+.int-set{font-family:var(--display); font-style:italic; font-size:16px; color:var(--gold); opacity:.85}
+
+/* ─ Journal ─ */
+.jentry{position:relative; padding-right:42px}
+.jdate{font-family:var(--ui); font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:var(--sage); margin-bottom:6px}
+.jtext{color:var(--cream); white-space:pre-wrap; line-height:1.55; font-size:14.5px}
+.jdel{position:absolute; top:12px; right:12px; border:none; background:rgba(255,255,255,.06); color:var(--muted); width:26px; height:26px; border-radius:50%; cursor:pointer; font-size:13px}
+.jdel:active{background:rgba(255,77,141,.25); color:var(--cream)}
+/* ─ Orchid emblem ─ */
+.bloom{position:relative; display:flex; align-items:center; justify-content:center; margin:2px auto 8px}
+.bloom-lg{width:120px; height:120px}
+.bloom-sm{width:88px; height:88px}
+.moonback{position:absolute; inset:0; border-radius:50%; background:radial-gradient(circle, rgba(255,201,60,.30), rgba(255,138,91,.13) 52%, transparent 70%)}
+.orchid{position:relative; z-index:1; width:80%; height:80%; filter:drop-shadow(0 2px 8px rgba(255,77,141,.32))}
+#contents .wordmark{font-size:clamp(42px,11.5vw,58px)}
+#diaryCover{overflow-y:auto}
 </style>
 </head>
 <body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <linearGradient id="skinG" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#6A4330"/><stop offset="0.55" stop-color="#9A5E36"/><stop offset="1" stop-color="#CC7E41"/>
+  </linearGradient>
+  <linearGradient id="poleG" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#FFC93C"/><stop offset="1" stop-color="#FF8A5B"/>
+  </linearGradient>
+  <symbol id="poleFig" viewBox="0 0 200 320">
+    <circle cx="122" cy="72" r="48" fill="#FFC93C" opacity="0.13"/>
+    <circle cx="122" cy="72" r="28" fill="#FFC93C" opacity="0.12"/>
+    <rect x="139" y="14" width="6.5" height="288" rx="3.25" fill="url(#poleG)" opacity="0.85"/>
+    <g stroke="url(#skinG)" stroke-linecap="round" fill="url(#skinG)">
+      <g fill="#3A2A21" stroke="none">
+        <circle cx="84" cy="50" r="27"/><circle cx="62" cy="44" r="12"/><circle cx="106" cy="44" r="12"/><circle cx="84" cy="26" r="14"/><circle cx="66" cy="64" r="11"/><circle cx="102" cy="64" r="11"/>
+      </g>
+      <circle cx="84" cy="61" r="15.5" stroke="none"/>
+      <path d="M84,74 L84,90" stroke-width="13" fill="none"/>
+      <path d="M85,90 L86,150" stroke-width="32" fill="none"/>
+      <ellipse cx="86" cy="153" rx="22" ry="15" stroke="none"/>
+      <path d="M99,94 Q123,68 139,50" stroke-width="11" fill="none"/>
+      <path d="M70,96 Q60,122 67,148" stroke-width="11" fill="none"/>
+      <path d="M94,152 Q106,212 117,295" stroke-width="13.5" fill="none"/>
+      <path d="M80,152 Q75,222 81,298" stroke-width="13.5" fill="none"/>
+      <circle cx="117" cy="296" r="3.4" stroke="none"/><circle cx="82" cy="299" r="3.4" stroke="none"/>
+    </g>
+  </symbol>
+  <linearGradient id="petalG" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#FF6FA4"/><stop offset="0.6" stop-color="#FF8A5B"/><stop offset="1" stop-color="#FFB36B"/>
+  </linearGradient>
+  <radialGradient id="centerG"><stop offset="0" stop-color="#FFE39A"/><stop offset="1" stop-color="#FFC93C"/></radialGradient>
+  <symbol id="orchid" viewBox="0 0 200 200">
+    <g fill="url(#petalG)" opacity="0.96">
+      <ellipse cx="100" cy="72" rx="16" ry="27" transform="rotate(0 100 104)"/>
+      <ellipse cx="100" cy="72" rx="16" ry="27" transform="rotate(72 100 104)"/>
+      <ellipse cx="100" cy="72" rx="16" ry="27" transform="rotate(144 100 104)"/>
+      <ellipse cx="100" cy="72" rx="16" ry="27" transform="rotate(216 100 104)"/>
+      <ellipse cx="100" cy="72" rx="16" ry="27" transform="rotate(288 100 104)"/>
+    </g>
+    <circle cx="100" cy="104" r="13" fill="url(#centerG)"/>
+    <circle cx="100" cy="104" r="6" fill="#C9447B"/>
+  </symbol>
+</defs></svg>
+<div id="diaryCover">
+  <div class="ribbon-mark" aria-hidden="true"></div>
+  <div class="diary-frame">
+    <span class="dstar tl">✦</span><span class="dstar tr">✦</span><span class="dstar bl">✦</span><span class="dstar br">✦</span>
+    <div class="bloom bloom-sm" aria-hidden="true"><span class="moonback"></span><svg class="orchid" viewBox="0 0 200 200"><use href="#orchid"/></svg></div>
+    <div class="wordmark dword">Pole <span>Journal</span></div>
+    <div class="studio">Moonlight Orchid</div>
+    <div class="dname" id="dname"></div>
+    <div class="moondiv" aria-hidden="true"><span class="mline"></span><span class="moon"></span><span class="mline"></span></div>
+    <div class="dhint">tap to open</div>
+  </div>
+</div>
+<button id="closeBook" aria-label="Close the book" title="Close the book"></button>
 <div class="wrap">
+  <div id="contents">
   <header>
     <div class="cover">
       <button class="gearbtn" id="gearBtn" title="Backup &amp; settings" aria-label="Settings">⚙</button>
+      <div class="bloom bloom-lg" aria-hidden="true"><span class="moonback"></span><svg class="orchid" viewBox="0 0 200 200"><use href="#orchid"/></svg></div>
       <div class="wordmark">Pole <span>Journal</span></div>
       <div class="studio">Moonlight Orchid</div>
+      <div class="nameplate" id="nameplate" title="Tap to change the name"></div>
       <div class="mantra" id="mantra" title="Tap for another"></div>
       <div class="moondiv" aria-hidden="true"><span class="mline"></span><span class="moon"></span><span class="mline"></span></div>
     </div>
-    <div class="tip" id="tip" title="Tap for another tip"></div>
+    <div class="todayline" id="todayline"></div>
   </header>
+
+  <div class="intention" id="intentionCard" title="Tap to set this month's intention"></div>
 
   <div class="eyebrow">Your practice at a glance</div>
   <section class="stats" id="stats"></section>
 
-  <nav class="tabs">
-    <button class="tab active" data-tab="log">📓 Log</button>
-    <button class="tab" data-tab="plans">📋 Plans</button>
-    <button class="tab" data-tab="routines">💃 Routines</button>
-    <button class="tab" data-tab="skills">📚 Moves</button>
-    <button class="tab" data-tab="progress">📈 Progress</button>
-    <button class="tab" data-tab="goals">🎯 Goals</button>
+  <div class="eyebrow">Your pages</div>
+  <nav class="menu" id="menu">
+    <button class="menu-item" data-page="calendar"><span class="mi-ic">🌙</span><span class="mi-tx"><b>Calendar</b><i>Streak · weekly goal · plan ahead</i></span><span class="mi-ar">›</span></button>
+    <button class="menu-item" data-page="log"><span class="mi-ic">📓</span><span class="mi-tx"><b>Log</b><i>Add a session · your history</i></span><span class="mi-ar">›</span></button>
+    <button class="menu-item" data-page="plans"><span class="mi-ic">📋</span><span class="mi-tx"><b>Plans</b><i>Your saved class layouts</i></span><span class="mi-ar">›</span></button>
+    <button class="menu-item" data-page="routines"><span class="mi-ic">💃🏿</span><span class="mi-tx"><b>Routines</b><i>Choreograph your dances</i></span><span class="mi-ar">›</span></button>
+    <button class="menu-item" data-page="skills"><span class="mi-ic">🧗🏿‍♀️</span><span class="mi-tx"><b>Moves</b><i>Your trick &amp; strength library</i></span><span class="mi-ar">›</span></button>
+    <button class="menu-item" data-page="progress"><span class="mi-ic">📈</span><span class="mi-tx"><b>Progress</b><i>Your journey &amp; benchmarks</i></span><span class="mi-ar">›</span></button>
+    <button class="menu-item" data-page="journal"><span class="mi-ic">📖</span><span class="mi-tx"><b>Journal</b><i>Reflect &amp; free-write</i></span><span class="mi-ar">›</span></button>
+    <button class="menu-item" data-page="goals"><span class="mi-ic">🎯</span><span class="mi-tx"><b>Goals</b><i>What you're chasing</i></span><span class="mi-ar">›</span></button>
   </nav>
+  <div class="tip" id="tip" title="Tap for another tip"></div>
+  </div>
 
-  <section class="panel active" id="panel-log">
-    <button class="btn" id="newSession">＋ Log a session</button>
-    <div class="card calcard" id="cal"></div>
-    <div class="sessions" id="sessions"></div>
-  </section>
+  <div id="pageView" aria-hidden="true">
+    <div id="pageBar"><button id="backBtn" class="backribbon">‹ Contents</button><div id="pageTitle"></div></div>
+    <div id="pageBody">
+    <section class="page" id="page-calendar">
+      <div class="card calcard" id="cal"></div>
+    </section>
+    <section class="page" id="page-log">
+      <button class="btn" id="newSession">＋ Log a session</button>
+      <div class="sessions" id="sessions"></div>
+    </section>
 
-  <section class="panel" id="panel-skills">
+  <section class="page" id="page-skills">
     <div class="moves-top">
       <div class="lead">Move tracker</div>
       <div class="count" id="skillCount"></div>
@@ -374,19 +518,19 @@ header{padding:4px 4px 18px}
     </div>
   </section>
 
-  <section class="panel" id="panel-plans">
+  <section class="page" id="page-plans">
     <div class="moves-top"><div class="lead">Plans</div><div class="count" id="planCount"></div></div>
     <button class="btn" id="newPlan">＋ New plan</button>
     <div class="plans" id="plans"></div>
   </section>
 
-  <section class="panel" id="panel-routines">
+  <section class="page" id="page-routines">
     <div class="moves-top"><div class="lead">Routines</div><div class="count" id="routineCount"></div></div>
     <button class="btn" id="newRoutine">＋ New routine</button>
     <div class="plans" id="routines"></div>
   </section>
 
-  <section class="panel" id="panel-progress">
+  <section class="page" id="page-progress">
     <div class="moves-top"><div class="lead">Your journey</div></div>
     <div class="card" id="journey"></div>
     <div class="card" style="margin-top:14px">
@@ -405,7 +549,7 @@ header{padding:4px 4px 18px}
     </div>
   </section>
 
-  <section class="panel" id="panel-goals">
+  <section class="page" id="page-goals">
     <div class="progress-head">
       <div class="lead">Goals</div>
       <div class="count" id="goalCount"></div>
@@ -417,7 +561,18 @@ header{padding:4px 4px 18px}
     <div class="goals" id="goals"></div>
   </section>
 
-  <section class="panel" id="panel-settings">
+  <section class="page" id="page-journal">
+    <div class="setblock" style="margin-bottom:14px"><p>A page just for you. Write how a session felt, a breakthrough, a thought to remember — even a sentence counts. Future you will love reading these.</p></div>
+    <div class="card">
+      <div class="field"><label>Date</label><input type="date" id="jDate"></div>
+      <div class="field"><label>Reflection</label><textarea id="jText" placeholder="Today on the pole…" style="min-height:130px"></textarea></div>
+      <div class="actions"><button class="btn sm" id="addJournalBtn">Save entry</button></div>
+    </div>
+    <div class="count" id="journalCount" style="margin:16px 2px 8px"></div>
+    <div class="journal" id="journalList"></div>
+  </section>
+
+  <section class="page" id="page-settings">
     <div class="card">
       <div class="setblock">
         <h3>Back up your log</h3>
@@ -440,6 +595,8 @@ header{padding:4px 4px 18px}
     </div>
     <div class="note">Pole kisses fade. Strength stays. 🩷</div>
   </section>
+    </div>
+  </div>
 </div>
 
 <div class="overlay" id="overlay">
@@ -562,6 +719,7 @@ function migrateSkills(old){
 
 var plans=[], planChecks={}, currentPlanId=null, planEditId=null;
 var routines=[], currentRoutineId=null, routineEditId=null;
+var ownerName="Lachundra", intentions={}, journal=[];
 var PLAN_SEED_VERSION = 2;
 var PLAN_SEED=[
   {seedKey:"ppa-wk8", title:"PPA Foundations · Week 8", focus:["Spins","Climbs","Strength","Flow"], body:`# PPA Foundations · Week 8
@@ -916,13 +1074,52 @@ function addFlex(){
   var rawRoutines = await store.get("polelog:routines");
   if(rawRoutines == null){ routines = ROUTINE_SEED.map(seedToRoutine); await save("polelog:routines", routines); }
   else { try{ routines = JSON.parse(rawRoutines); }catch(e){ routines = []; } }
+  ownerName = await load("polelog:ownerName", "Lachundra");
+  intentions = await load("polelog:intentions", {});
+  journal = await load("polelog:journal", []);
   setTip(); setMantra(); buildStaticPickers(); renderAll(); wire();
   var _fd=document.getElementById("flexDate"); if(_fd) _fd.value=todayISO();
+  var _jd=document.getElementById("jDate"); if(_jd) _jd.value=todayISO();
 })();
 
-function renderAll(){ renderStats(); renderSessions(); renderSkills(); renderGoals(); renderPlans(); renderRoutines(); renderCalendar(); }
+function renderAll(){ renderStats(); renderSessions(); renderSkills(); renderGoals(); renderPlans(); renderRoutines(); renderCalendar(); renderName(); renderToday(); renderIntention(); renderJournal(); }
 function setTip(){ var t = TIPS[Math.floor(Math.random()*TIPS.length)]; document.getElementById("tip").innerHTML = '<span class="spark">💫</span> '+esc(t); }
 function setMantra(){ var el=document.getElementById("mantra"); if(!el) return; el.textContent = "\u201C"+MANTRAS[Math.floor(Math.random()*MANTRAS.length)]+"\u201D"; }
+
+var PAGE_TITLES={calendar:"🌙 Calendar",log:"📓 Log",plans:"📋 Plans",routines:"💃 Routines",skills:"📚 Moves",progress:"📈 Progress",journal:"📖 Journal",goals:"🎯 Goals",settings:"⚙ Settings"};
+function openPage(name){
+  var pv=document.getElementById("pageView"), c=document.getElementById("contents");
+  [].forEach.call(document.querySelectorAll("#pageBody .page"),function(p){ p.classList.remove("show"); });
+  var pg=document.getElementById("page-"+name); if(pg) pg.classList.add("show");
+  document.getElementById("pageTitle").textContent = PAGE_TITLES[name]||"";
+  if(name==="settings") refreshExport();
+  c.style.display="none"; pv.style.display="block"; pv.setAttribute("aria-hidden","false");
+  pv.classList.remove("anim"); void pv.offsetWidth; pv.classList.add("anim");
+  window.scrollTo({top:0,behavior:"auto"});
+}
+function closePage(){
+  var pv=document.getElementById("pageView"), c=document.getElementById("contents");
+  pv.style.display="none"; pv.setAttribute("aria-hidden","true"); c.style.display="block";
+  c.classList.remove("anim"); void c.offsetWidth; c.classList.add("anim");
+  window.scrollTo({top:0,behavior:"auto"});
+}
+function monthKey(){ var d=new Date(); return d.getFullYear()+"-"+(d.getMonth()+1); }
+function renderName(){ var t="This diary belongs to "+(ownerName||"you"); var a=document.getElementById("nameplate"); if(a) a.textContent=t; var b=document.getElementById("dname"); if(b) b.textContent=t; }
+function renameOwner(){ var n=prompt("Whose diary is this?", ownerName||""); if(n===null) return; ownerName=(n.trim()||ownerName); save("polelog:ownerName",ownerName); renderName(); }
+function renderToday(){ var el=document.getElementById("todayline"); if(!el) return; el.textContent=new Date().toLocaleDateString(undefined,{weekday:"long",month:"long",day:"numeric"}); }
+function renderIntention(){ var el=document.getElementById("intentionCard"); if(!el) return; var mo=new Date().toLocaleDateString(undefined,{month:"long"}); var v=intentions[monthKey()];
+  el.innerHTML = v ? ('<span class="int-lbl">'+esc(mo)+"\u2019s intention"+'</span><span class="int-val">'+esc(v)+'</span>') : ('<span class="int-set">\u2726 Set '+esc(mo)+"\u2019s intention"+'</span>'); }
+function editIntention(){ var k=monthKey(); var cur=intentions[k]||""; var v=prompt("Your intention for this month", cur); if(v===null) return; v=v.trim(); if(v) intentions[k]=v; else delete intentions[k]; save("polelog:intentions",intentions); renderIntention(); }
+function renderJournal(){ var el=document.getElementById("journalList"); if(!el) return; var cnt=document.getElementById("journalCount");
+  if(cnt) cnt.textContent=journal.length+(journal.length===1?" entry":" entries");
+  if(!journal.length){ el.innerHTML='<div class="card empty"><div class="big">📖</div><div class="ttl">No reflections yet</div><div>Write your first one above — even a sentence. Future you will love reading these.</div></div>'; return; }
+  var list=journal.slice().sort(function(a,b){ return (b.date||"").localeCompare(a.date||"") || ((b.id>a.id)?1:-1); });
+  el.innerHTML=list.map(function(e){ var ds=new Date((e.date||todayISO())+"T00:00:00").toLocaleDateString(undefined,{weekday:"short",month:"short",day:"numeric"});
+    return '<div class="card jentry"><div class="jdate">'+esc(ds)+'</div><div class="jtext">'+esc(e.text)+'</div><button class="jdel" data-id="'+e.id+'" aria-label="Delete entry">✕</button></div>'; }).join("");
+  [].forEach.call(el.querySelectorAll(".jdel"),function(b){ b.addEventListener("click",function(ev){ ev.stopPropagation(); deleteJournal(b.getAttribute("data-id")); }); });
+}
+function addJournal(){ var d=document.getElementById("jDate").value||todayISO(); var t=document.getElementById("jText").value.trim(); if(!t) return; journal.push({id:uid(),date:d,text:t}); save("polelog:journal",journal); document.getElementById("jText").value=""; renderJournal(); }
+function deleteJournal(id){ journal=journal.filter(function(x){return x.id!==id;}); save("polelog:journal",journal); renderJournal(); }
 
 function renderStats(){
   var now=new Date(); now.setHours(0,0,0,0); var weekAgo=new Date(now); weekAgo.setDate(now.getDate()-6);
@@ -1060,7 +1257,7 @@ function saveSession(){
 }
 function deleteSession(){ if(!editingId) return; sessions=sessions.filter(function(x){return x.id!==editingId;}); save("polelog:sessions",sessions); closeModal(); renderStats(); renderSessions(); renderCalendar(); }
 
-function refreshExport(){ document.getElementById("exportBox").value = JSON.stringify({sessions:sessions,skills:skills,goals:goals,plans:plans,planChecks:planChecks,flex:flex,planned:planned,weeklyGoal:weeklyGoal,routines:routines},null,2); }
+function refreshExport(){ document.getElementById("exportBox").value = JSON.stringify({sessions:sessions,skills:skills,goals:goals,plans:plans,planChecks:planChecks,flex:flex,planned:planned,weeklyGoal:weeklyGoal,routines:routines,ownerName:ownerName,intentions:intentions,journal:journal},null,2); }
 async function copyExport(){ var box=document.getElementById("exportBox"); var btn=document.getElementById("copyBtn");
   try{ await navigator.clipboard.writeText(box.value); btn.textContent="Copied ✓"; }catch(e){ box.focus(); box.select(); btn.textContent="Select all & copy"; }
   setTimeout(function(){ btn.textContent="Copy"; },1800); }
@@ -1069,7 +1266,8 @@ function importBackup(){ var msg=document.getElementById("importMsg"); var raw=d
     if(Array.isArray(data.plans)) plans=data.plans; if(data.planChecks && typeof data.planChecks==="object") planChecks=data.planChecks; if(Array.isArray(data.flex)) flex=data.flex;
     if(data.planned && typeof data.planned==="object") planned=data.planned; if(typeof data.weeklyGoal==="number") weeklyGoal=data.weeklyGoal;
     if(Array.isArray(data.routines)) routines=data.routines;
-    save("polelog:sessions",sessions); save("polelog:skills",skills); save("polelog:goals",goals); save("polelog:plans",plans); save("polelog:planchecks",planChecks); save("polelog:flex",flex); save("polelog:planned",planned); save("polelog:weeklyGoal",weeklyGoal); save("polelog:routines",routines); renderAll(); refreshExport();
+    if(typeof data.ownerName==="string") ownerName=data.ownerName; if(data.intentions && typeof data.intentions==="object") intentions=data.intentions; if(Array.isArray(data.journal)) journal=data.journal;
+    save("polelog:sessions",sessions); save("polelog:skills",skills); save("polelog:goals",goals); save("polelog:plans",plans); save("polelog:planchecks",planChecks); save("polelog:flex",flex); save("polelog:planned",planned); save("polelog:weeklyGoal",weeklyGoal); save("polelog:routines",routines); save("polelog:ownerName",ownerName); save("polelog:intentions",intentions); save("polelog:journal",journal); renderAll(); refreshExport();
     document.getElementById("importBox").value=""; msg.textContent="Loaded. Your log is restored."; }
   catch(e){ msg.textContent="That doesn't look like a valid backup."; } }
 var resetArmed=false, resetTimer=null;
@@ -1077,9 +1275,9 @@ function resetAll(){ var btn=document.getElementById("resetBtn");
   if(!resetArmed){ resetArmed=true; btn.textContent="Tap again to erase"; resetTimer=setTimeout(function(){ resetArmed=false; btn.textContent="Erase everything"; },3500); return; }
   clearTimeout(resetTimer); resetArmed=false; btn.textContent="Erase everything";
   sessions=[]; skills=buildDefaults(); goals=DEFAULT_GOALS.map(function(t){ return {id:uid(),text:t,done:false}; });
-  plans=PLAN_SEED.map(seedToPlan); planChecks={}; flex=[]; planned={}; weeklyGoal=3; routines=ROUTINE_SEED.map(seedToRoutine);
+  plans=PLAN_SEED.map(seedToPlan); planChecks={}; flex=[]; planned={}; weeklyGoal=3; routines=ROUTINE_SEED.map(seedToRoutine); intentions={}; journal=[];
   save("polelog:sessions",sessions); save("polelog:skills",skills); save("polelog:skillsSeedVersion",SEED_VERSION); save("polelog:goals",goals);
-  save("polelog:plans",plans); save("polelog:planSeedVersion",PLAN_SEED_VERSION); save("polelog:planchecks",planChecks); save("polelog:flex",flex); save("polelog:planned",planned); save("polelog:weeklyGoal",weeklyGoal); save("polelog:routines",routines);
+  save("polelog:plans",plans); save("polelog:planSeedVersion",PLAN_SEED_VERSION); save("polelog:planchecks",planChecks); save("polelog:flex",flex); save("polelog:planned",planned); save("polelog:weeklyGoal",weeklyGoal); save("polelog:routines",routines); save("polelog:intentions",intentions); save("polelog:journal",journal);
   collapsed={}; skillFilter="all"; renderAll(); refreshExport(); }
 
 function celebrate(){
@@ -1092,12 +1290,16 @@ function celebrate(){
 }
 
 function wire(){
-  [].forEach.call(document.querySelectorAll(".tab"),function(t){ t.addEventListener("click",function(){ var name=t.getAttribute("data-tab");
-    [].forEach.call(document.querySelectorAll(".tab"),function(x){x.classList.remove("active");}); t.classList.add("active");
-    [].forEach.call(document.querySelectorAll(".panel"),function(p){p.classList.remove("active");}); document.getElementById("panel-"+name).classList.add("active");
-    if(name==="settings") refreshExport(); window.scrollTo({top:0,behavior:"smooth"}); }); });
+  [].forEach.call(document.querySelectorAll(".menu-item"),function(t){ t.addEventListener("click",function(){ openPage(t.getAttribute("data-page")); }); });
+  document.getElementById("backBtn").addEventListener("click",closePage);
+  var _np=document.getElementById("nameplate"); if(_np) _np.addEventListener("click",renameOwner);
+  var _dn=document.getElementById("dname"); if(_dn) _dn.addEventListener("click",renameOwner);
+  var _ic=document.getElementById("intentionCard"); if(_ic) _ic.addEventListener("click",editIntention);
+  var _aj=document.getElementById("addJournalBtn"); if(_aj) _aj.addEventListener("click",addJournal);
   document.getElementById("tip").addEventListener("click",setTip);
   var _mn=document.getElementById("mantra"); if(_mn) _mn.addEventListener("click",setMantra);
+  var _cov=document.getElementById("diaryCover"); if(_cov) _cov.addEventListener("click",function(){ _cov.classList.add("diary-open"); });
+  var _cb=document.getElementById("closeBook"); if(_cb) _cb.addEventListener("click",function(){ if(_cov) _cov.classList.remove("diary-open"); });
   document.getElementById("newSession").addEventListener("click",function(){ openModal(null); });
   document.getElementById("cancelBtn").addEventListener("click",closeModal);
   document.getElementById("saveBtn").addEventListener("click",saveSession);
@@ -1128,7 +1330,7 @@ function wire(){
   document.getElementById("routineEditSave").addEventListener("click",saveRoutineFromEditor);
   document.getElementById("routineEditDelete").addEventListener("click",deleteRoutineFromEditor);
   document.getElementById("addFlexBtn").addEventListener("click",addFlex);
-  document.getElementById("gearBtn").addEventListener("click",function(){ [].forEach.call(document.querySelectorAll(".tab"),function(x){x.classList.remove("active");}); [].forEach.call(document.querySelectorAll(".panel"),function(p){p.classList.remove("active");}); document.getElementById("panel-settings").classList.add("active"); refreshExport(); window.scrollTo({top:0,behavior:"smooth"}); });
+  document.getElementById("gearBtn").addEventListener("click",function(){ openPage("settings"); });
 }
 </script>
 </body>
